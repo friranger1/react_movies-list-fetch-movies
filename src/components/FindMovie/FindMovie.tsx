@@ -43,7 +43,7 @@ export const FindMovie: React.FC<Props> = ({ onAdd }) => {
             data.Poster !== 'N/A'
               ? data.Poster
               : 'https://via.placeholder.com/360x270.png?text=no%20preview',
-          imdbUrl: '',
+          imdbUrl: `https://www.imdb.com/${data.Title}/${data.imdbID}`,
         };
 
         setMoviePreview(normalizedMovie);
@@ -93,6 +93,10 @@ export const FindMovie: React.FC<Props> = ({ onAdd }) => {
               className={`button is-light ${isLoading ? 'is-loading' : ''}`}
               disabled={query === ''}
               onClick={event => {
+                if (!query) {
+                  setHideTitle(true);
+                }
+
                 event.preventDefault();
                 receiveMovie(query);
               }}
@@ -107,7 +111,7 @@ export const FindMovie: React.FC<Props> = ({ onAdd }) => {
               type="button"
               className="button is-primary"
               onClick={handleAddClick}
-              disabled={query === ''}
+              disabled={!moviePreview}
             >
               Add to the list
             </button>
